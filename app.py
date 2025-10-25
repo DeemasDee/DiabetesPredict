@@ -1,22 +1,13 @@
 import streamlit as st
 import pandas as pd
-import pickle
+import joblib
+import os
 
 # ============================
 #  LOAD MODEL
 # ============================
-try:
-    with open("rf_model.pkl", "rb") as f:
-        data = pickle.load(f)
-    model = data["model"]
-    preprocessor = data["preprocessor"]
-except Exception as e:
-    st.error("❌ Gagal memuat model rf_model.pkl. Pastikan file model ada di folder yang sama.")
-    st.stop()
+MODEL_PATH = "rf_model.pkl"
 
-# ============================
-#  KONFIGURASI DASHBOARD
-# ============================
 st.set_page_config(
     page_title="Prediksi Diabetes",
     page_icon="🩺",
@@ -28,6 +19,20 @@ st.markdown("""
 Aplikasi ini memprediksi kemungkinan **Diabetes Mellitus (DM)** menggunakan model *Random Forest*  
 berdasarkan hasil penelitian dan dataset klinis yang telah diproses.
 """)
+
+if not os.path.exists(MODEL_PATH):
+    st.error(f"❌ File model tidak ditemukan: `{MODEL_PATH}`. Pastikan file `rf_model.pkl` ada di folder yang sama dengan `app.py`.")
+    st.stop()
+
+try:
+    data = joblib.load(MODEL_PATH)
+    model = data["model"]
+    preprocessor = data["preprocessor"]
+    st.success("✅ Model berhasil dimuat.")
+except Exception as e:
+    st.error(f"❌ Gagal memuat model `{MODEL_PATH}`: {e}")
+    st.stop()
+
 
 # ============================
 #  FORM INPUT PASIEN
@@ -50,6 +55,7 @@ with col2:
     pola_makan = st.selectbox("Pola Makan", ["SEHAT", "TIDAK SEHAT"])
     jenis_kelamin = st.selectbox("Jenis Kelamin", ["LAKI-LAKI", "PEREMPUAN"])
     bbtb_kat = st.selectbox("Kategori BB/TB", ["NORMAL", "OVERWEIGHT", "OBESITAS"])
+
 
 # ============================
 #  PREDIKSI
@@ -79,9 +85,9 @@ if st.button("🔍 Prediksi Sekarang"):
         st.metric(label="Kemungkinan Diabetes (%)", value=f"{prob*100:.2f}%")
 
         if pred == 1:
-            st.error("💀 Hasil: Positif Diabetes (DM)")
+            st.error("💀 Hasil: **Positif Diabetes (DM)**")
         else:
-            st.success("💚 Hasil: Negatif (Tidak Terindikasi DM)")
+            st.success("💚 Hasil: **Negatif (Tidak Terindikasi DM)**")
 
         st.markdown("---")
         st.caption("Model: Random Forest | Preprocessing: StandardScaler + OneHotEncoder")
