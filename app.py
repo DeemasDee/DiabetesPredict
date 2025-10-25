@@ -52,7 +52,16 @@ with col2:
     kolesterol = st.number_input("Kolesterol (mg/dL)", min_value=50.0, max_value=400.0, value=180.0)
     glukosa_sewaktu = st.number_input("Glukosa Darah Sewaktu (mg/dL)", min_value=0.0, max_value=400.0, value=150.0)
     bbtb = st.number_input("BB/TB (BMI)", min_value=10.0, max_value=50.0, value=23.0)
-    pola_makan = st.selectbox("Pola Makan", ["SEHAT", "TIDAK SEHAT"])
+
+    # 🔹 Perubahan di sini: pilihan pola makan diganti ke frekuensi
+    pola_makan = st.selectbox("Frekuensi Makan per Hari", [
+        "1x/hari",
+        "2x/hari",
+        "3x/hari",
+        "4x/hari",
+        "5x/hari"
+    ])
+
     jenis_kelamin = st.selectbox("Jenis Kelamin", ["LAKI-LAKI", "PEREMPUAN"])
     bbtb_kat = st.selectbox("Kategori BB/TB", ["NORMAL", "OVERWEIGHT", "OBESITAS"])
 
@@ -71,7 +80,7 @@ if st.button("🔍 Prediksi Sekarang"):
         "Kolesterol (mg/dL)_num": kolesterol,
         "Glukosa Darah  Sewaktu (mg/dL)_num": glukosa_sewaktu,
         "BB/TB_num": bbtb,
-        "POLA MAKAN": pola_makan,
+        "POLA MAKAN": pola_makan,         # tetap gunakan key yang sama
         "JENIS KELAMIN": jenis_kelamin,
         "BB/TB": bbtb_kat
     }])
