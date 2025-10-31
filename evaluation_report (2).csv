@@ -1,0 +1,4 @@
+model,accuracy,precision,recall,f1
+Decision Tree (baseline),1.0,1.0,1.0,1.0
+Random Forest (baseline),1.0,1.0,1.0,1.0
+Random Forest (tuned),1.0,1.0,1.0,1.0
