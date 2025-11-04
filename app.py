@@ -27,6 +27,23 @@ Pastikan file model (joblib) berada pada folder yang sama dengan `app.py`.
 )
 
 # -----------------------
+# HELPERS YANG DIBUTUHKAN UNTUK MEMUAT MODEL YANG DISIMPAN DENGAN FunctionTransformer
+# -----------------------
+def to_str_df(X):
+    """
+    Harus sama persis dengan fungsi yang dipakai saat menyimpan preprocessor.
+    Fungsi ini dipanggil oleh FunctionTransformer saat preprocessor di-unpickle.
+    """
+    import pandas as pd
+    if isinstance(X, pd.DataFrame):
+        dfX = X.copy()
+    else:
+        dfX = pd.DataFrame(X)
+    return dfX.fillna("__MISSING__").astype(str)
+
+
+
+# -----------------------
 # LOAD MODEL (try several filenames)
 # -----------------------
 # -----------------------
