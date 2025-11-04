@@ -12,19 +12,7 @@ import os
 MODEL_CANDIDATES = [
     "rf_model.pkl",
     "rf_tuned_model_preproc.pkl",
-    "rf_tuned_model_preproc.pkl",
-    "rf_tuned_model_preproc.pkl",
-    "rf_tuned_model_preproc.pkl",
-    "rf_tuned_model_preproc.pkl",
-    "rf_tuned_model_preproc.pkl",
-    "rf_tuned_model_preproc.pkl",
-    "rf_tuned_model_preproc.pkl",
-    "rf_tuned_model_preproc.pkl",
     "rf_model_preproc.pkl",
-    "rf_tuned_model_preproc.pkl",
-    "rf_tuned_model_preproc.pkl",
-    "rf_tuned_model_preproc.pkl",
-    "rf_tuned_model_preproc.pkl"
 ]
 
 st.set_page_config(page_title="Prediksi Diabetes", page_icon="🩺", layout="centered")
