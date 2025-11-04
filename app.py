@@ -31,7 +31,7 @@ Pastikan file model (joblib) berada pada folder yang sama dengan `app.py`.
 # -----------------------
 loaded = None
 model_file = None
-for fname in MODEL_CANDIDATES:
+for fname in MODEL_PATH:
     if os.path.exists(fname):
         try:
             loaded = joblib.load(fname)
