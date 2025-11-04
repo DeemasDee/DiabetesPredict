@@ -9,11 +9,13 @@ import os
 # CONFIG
 # -----------------------
 # Ganti path ini bila perlu (nama file yang kamu simpan dari training)
-MODEL_CANDIDATES = [
-    "rf_model.pkl",
-    "rf_tuned_model_preproc.pkl",
-    "rf_model_preproc.pkl",
-]
+#MODEL_CANDIDATES = [
+#    "rf_model.pkl",
+#    "rf_tuned_model_preproc.pkl",
+#    "rf_model_preproc.pkl",
+#]
+MODEL_PATH = "rf_tuned_model_preproc.pkl"
+
 
 st.set_page_config(page_title="Prediksi Diabetes", page_icon="🩺", layout="centered")
 st.title("🩺 Dashboard Prediksi Diabetes")
