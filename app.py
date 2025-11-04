@@ -29,24 +29,47 @@ Pastikan file model (joblib) berada pada folder yang sama dengan `app.py`.
 # -----------------------
 # LOAD MODEL (try several filenames)
 # -----------------------
+# -----------------------
+# LOAD MODEL
+# -----------------------
 loaded = None
 model_file = None
-for fname in MODEL_PATH:
-    if os.path.exists(fname):
-        try:
-            loaded = joblib.load(fname)
-            model_file = fname
-            break
-        except Exception:
-            # try next
-            loaded = None
 
-if loaded is None:
-    st.error(
-        "❌ File model tidak ditemukan atau gagal dimuat. \n\n"
-        "Letakkan file model (joblib) di folder yang sama. Contoh nama file: `rf_model.pkl` atau `rf_tuned_model_preproc.pkl`."
-    )
-    st.stop()
+# If MODEL_PATH is a single filename (string), try load it directly.
+# If you'd prefer multiple candidates, set MODEL_PATH to a list of filenames.
+if isinstance(MODEL_PATH, str):
+    if os.path.exists(MODEL_PATH):
+        try:
+            loaded = joblib.load(MODEL_PATH)
+            model_file = MODEL_PATH
+        except Exception as e:
+            st.error(f"❌ Gagal memuat file model `{MODEL_PATH}`: {e}")
+            st.stop()
+    else:
+        st.error(f"❌ File model `{MODEL_PATH}` tidak ditemukan di folder kerja saat ini: {os.getcwd()}")
+        st.write("Isi folder sekarang:")
+        try:
+            st.write(os.listdir("."))
+        except Exception:
+            pass
+        st.stop()
+else:
+    # if MODEL_PATH is an iterable/list of candidates
+    for fname in MODEL_PATH:
+        if os.path.exists(fname):
+            try:
+                loaded = joblib.load(fname)
+                model_file = fname
+                break
+            except Exception:
+                loaded = None
+
+    if loaded is None:
+        st.error(
+            "❌ Tidak dapat menemukan / memuat file model dari daftar kandidat.\n"
+            "Pastikan salah satu nama file ada di folder kerja dan berisi object joblib yang benar."
+        )
+        st.stop()
 
 # extract expected objects
 model = loaded.get("model") or loaded.get("estimator") or None
