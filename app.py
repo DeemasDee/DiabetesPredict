@@ -17,7 +17,7 @@ import os
 MODEL_PATH = "rf_tuned_model_preproc.pkl"
 
 
-st.set_page_config(page_title="Prediksi Diabetes", page_icon="🩺", layout="centered")
+st.set_page_config(page_title="Prediksi XX Diabetes", page_icon="🩺", layout="centered")
 st.title("🩺 Dashboard Prediksi Diabetes")
 st.markdown(
     """
